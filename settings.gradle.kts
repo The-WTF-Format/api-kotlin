@@ -1,4 +1,12 @@
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
-}
 rootProject.name = "api-kotlin"
+
+include(
+    fileTree(".")
+        .apply {
+            include("**/build.gradle.kts")
+            exclude("build.gradle.kts")
+        }
+        .map { it.relativeTo(rootProject.projectDir) }
+        .map { it.parent }
+        .map { it.replace(File.separator, ":") }
+)
